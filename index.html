@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Waste Management System | Government of Gujarat</title>
+    
+    <!-- Leaflet CSS for Maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+    
+    <!-- Chart.js for Analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Prototype Alert Banner -->
+    <div class="prototype-banner">
+        <div class="scrolling-text">
+            <span>⚠️ PROTOTYPE WEBSITE FOR GUJARAT HACKATHON - SMART WASTE MANAGEMENT SYSTEM DEMONSTRATION ⚠️ PROTOTYPE WEBSITE FOR GUJARAT HACKATHON - SMART WASTE MANAGEMENT SYSTEM DEMONSTRATION ⚠️</span>
+        </div>
+    </div>
+
+    <!-- Government Header -->
+    <header class="gov-header">
+        <div class="header-container">
+            <!-- Left: Government Logo and Branding -->
+            <div class="gov-branding">
+                <div class="emblem-section">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMjgiIGZpbGw9IiNGRkY1RjAiIHN0cm9rZT0iI0ZGOTkzMyIgc3Ryb2tlLXdpZHRoPSI0Ii8+CjxwYXRoIGQ9Ik0zMCA4QzE4LjUgOCAxMCAxNi41IDEwIDI4VjMyQzEwIDQzLjUgMTguNSA1MiAzMCA1MkM0MS41IDUyIDUwIDQzLjUgNTAgMzJWMjhDNTAgMTYuNSA0MS41IDggMzAgOFoiIGZpbGw9IiNGRjk5MzMiLz4KPHBhdGggZD0iTTMwIDEyQzIwLjcgMTIgMTQgMTguNyAxNCAyOFYzMkMxNCA0MS4zIDIwLjcgNDggMzAgNDhDMzkuMyA0OCA0NiA0MS4zIDQ2IDMyVjI4QzQ2IDE4LjcgMzkuMyAxMiAzMCAxMloiIGZpbGw9IiNGRkY1RjAiLz4KPHBhdGggZD0iTTMwIDIwQzI1LjYgMjAgMjIgMjMuNiAyMiAyOFYzMkMyMiAzNi40IDI1LjYgNDAgMzAgNDBDMzQuNCA0MCAzOCAzNi40IDM4IDMyVjI4QzM4IDIzLjYgMzQuNCAyMCAzMCAyMFoiIGZpbGw9IiNGRjk5MzMiLz4KPC9zdmc+" alt="Government of Gujarat Emblem" class="gov-emblem">
+                    <div class="satyamev-jayate">सत्यमेव जयते</div>
+                </div>
+                <div class="title-section">
+                    <h1 class="main-title">Waste Management System</h1>
+                    <p class="subtitle">Government of Gujarat</p>
+                </div>
+            </div>
+            
+            <!-- Right: Digital India and MyGov logos -->
+            <div class="program-logos">
+                <div class="digital-india">
+                    <img src="digital_india.png" class="program-logo">
+                </div>
+                <div class="my-gov">
+                    <img src="india.png" alt="MyGov" class="program-logo">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar-gov">
+        <div class="nav-container">
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link active" data-section="dashboard">
+                    <i class="fas fa-chart-line"></i> Dashboard
+                </a></li>
+                <li><a href="#" class="nav-link" data-section="map">
+                    <i class="fas fa-map-marked-alt"></i> Live Monitoring
+                </a></li>
+                <li><a href="#" class="nav-link" data-section="analytics">
+                    <i class="fas fa-chart-bar"></i> Analytics & Reports
+                </a></li>
+                <li><a href="#" class="nav-link" data-section="routes">
+                    <i class="fas fa-route"></i> Route Management
+                </a></li>
+                <li><a href="#" class="nav-link" data-section="public">
+                    <i class="fas fa-users"></i> Citizen Portal
+                </a></li>
+            </ul>
+            <div class="user-section">
+                <div class="notification-center">
+                    <i class="fas fa-bell notification-icon"></i>
+                    <span class="notification-badge">3</span>
+                </div>
+                <div class="user-info">
+                    <span class="user-name">Municipal Officer</span>
+                    <img src="https://via.placeholder.com/40" alt="User" class="user-avatar">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb-section">
+        <div class="container">
+            <nav class="breadcrumb">
+                <span>Home</span>
+                <i class="fas fa-chevron-right"></i>
+                <span>Smart City</span>
+                <i class="fas fa-chevron-right"></i>
+                <span class="current-page">Waste Management System</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Sidebar Notifications -->
+        <aside class="sidebar-gov">
+            <div class="sidebar-header">
+                <h3><i class="fas fa-exclamation-triangle"></i> Priority Alerts</h3>
+                <span class="last-updated">Last Updated: <span id="lastUpdateTime"></span></span>
+            </div>
+            <div class="alert-list" id="alertList">
+                <!-- Dynamic alerts will be inserted here -->
+            </div>
+            
+            <!-- Quick Stats -->
+            <div class="quick-stats">
+                <h4><i class="fas fa-tachometer-alt"></i> Quick Stats</h4>
+                <div class="stat-item">
+                    <span class="stat-label">Active Bins</span>
+                    <span class="stat-value" id="activeBinsCount">156</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Collections Today</span>
+                    <span class="stat-value" id="collectionsToday">43</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Fuel Saved</span>
+                    <span class="stat-value" id="fuelSavedToday">124L</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content-gov">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="section active">
+                <div class="page-header">
+                    <h1>Smart Waste Management Dashboard</h1>
+                    <p class="page-subtitle">Real-time monitoring and analytics for efficient waste collection across Gujarat</p>
+                    <div class="last-sync">
+                        <i class="fas fa-sync-alt"></i>
+                        <span>Last synchronized: <span id="syncTime">2 minutes ago</span></span>
+                    </div>
+                </div>
+                
+                <!-- KPI Cards with Government Style -->
+                <div class="kpi-grid-gov">
+                    <div class="kpi-card-gov">
+                        <div class="kpi-header">
+                            <div class="kpi-icon-gov green">
+                                <i class="fas fa-trash-alt"></i>
+                            </div>
+                            <div class="kpi-trend">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+2.5%</span>
+                            </div>
+                        </div>
+                        <div class="kpi-content-gov">
+                            <h3 id="totalBins">156</h3>
+                            <p>Total Smart Bins</p>
+                            <small>Across 12 districts</small>
+                        </div>
+                    </div>
+                    
+                    <div class="kpi-card-gov critical">
+                        <div class="kpi-header">
+                            <div class="kpi-icon-gov red">
+                                <i class="fas fa-exclamation-circle"></i>
+                            </div>
+                            <div class="kpi-trend negative">
+                                <i class="fas fa-arrow-down"></i>
+                                <span>-15%</span>
+                            </div>
+                        </div>
+                        <div class="kpi-content-gov">
+                            <h3 id="fullBins">23</h3>
+                            <p>Critical Bins (>80%)</p>
+                            <small>Requires immediate attention</small>
+                        </div>
+                    </div>
+                    
+                    <div class="kpi-card-gov">
+                        <div class="kpi-header">
+                            <div class="kpi-icon-gov blue">
+                                <i class="fas fa-truck"></i>
+                            </div>
+                            <div class="kpi-trend">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+5%</span>
+                            </div>
+                        </div>
+                        <div class="kpi-content-gov">
+                            <h3 id="activeTrucks">8</h3>
+                            <p>Active Collection Vehicles</p>
+                            <small>Out of 12 total vehicles</small>
+                        </div>
+                    </div>
+                    
+                    <div class="kpi-card-gov success">
+                        <div class="kpi-header">
+                            <div class="kpi-icon-gov orange">
+                                <i class="fas fa-leaf"></i>
+                            </div>
+                            <div class="kpi-trend">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+29%</span>
+                            </div>
+                        </div>
+                        <div class="kpi-content-gov">
+                            <h3 id="fuelSaved">29%</h3>
+                            <p>Fuel Efficiency Improvement</p>
+                            <small>Compared to previous month</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Government Notice Board -->
+                <div class="notice-board">
+                    <div class="notice-header">
+                        <h2><i class="fas fa-bullhorn"></i> Official Notices & Updates</h2>
+                        <span class="notice-date">Updated: September 30, 2025</span>
+                    </div>
+                    <div class="notice-content">
+                        <div class="notice-item">
+                            <span class="notice-type important">IMPORTANT</span>
+                            <p>Smart Waste Management pilot program launched in Ahmedabad, Surat, and Vadodara.</p>
+                        </div>
+                        <div class="notice-item">
+                            <span class="notice-type info">INFO</span>
+                            <p>Mobile app for citizen reporting will be available from October 15, 2025.</p>
+                        </div>
+                        <div class="notice-item">
+                            <span class="notice-type success">SUCCESS</span>
+                            <p>25% reduction in waste collection costs achieved in Q3 2025.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Government Dashboard Map -->
+                <div class="dashboard-map-container-gov">
+                    <div class="map-header-gov">
+                        <h2><i class="fas fa-map"></i> Gujarat State Overview</h2>
+                        <div class="map-controls-header">
+                            <button class="btn-gov btn-sm" id="refreshMap">
+                                <i class="fas fa-sync-alt"></i> Refresh
+                            </button>
+                            <button class="btn-gov btn-sm btn-secondary" id="fullscreenMap">
+                                <i class="fas fa-expand"></i> Full Screen
+                            </button>
+                        </div>
+                    </div>
+                    <div id="dashboardMap" class="mini-map-gov"></div>
+                    <div class="map-footer-gov">
+                        <div class="coverage-info">
+                            <span><i class="fas fa-check-circle"></i> Coverage: 12 Districts</span>
+                            <span><i class="fas fa-users"></i> Population Served: 6.3M</span>
+                            <span><i class="fas fa-recycle"></i> Daily Waste: 4000 Tonnes</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Collections with Government Table Style -->
+                <div class="recent-collections-gov">
+                    <div class="table-header-gov">
+                        <h2><i class="fas fa-history"></i> Recent Collection Activities</h2>
+                        <div class="table-actions">
+                            <button class="btn-gov btn-sm">
+                                <i class="fas fa-download"></i> Export
+                            </button>
+                            <button class="btn-gov btn-sm btn-secondary">
+                                <i class="fas fa-filter"></i> Filter
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-container-gov">
+                        <table class="data-table-gov">
+                            <thead>
+                                <tr>
+                                    <th>Bin ID</th>
+                                    <th>Location</th>
+                                    <th>District</th>
+                                    <th>Fill Level</th>
+                                    <th>Last Collection</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentCollectionsTable">
+                                <!-- Dynamic data -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Live Map Section -->
+            <section id="map" class="section">
+                <div class="page-header">
+                    <h1>Live Waste Bin Monitoring</h1>
+                    <p class="page-subtitle">Real-time status monitoring of all smart bins across Gujarat state</p>
+                </div>
+                
+                <div class="map-controls-gov">
+                    <div class="filter-group-gov">
+                        <label>Filter by Status:</label>
+                        <button class="filter-btn-gov active" data-filter="all">
+                            <i class="fas fa-globe"></i> All Bins (156)
+                        </button>
+                        <button class="filter-btn-gov critical" data-filter="critical">
+                            <i class="fas fa-exclamation-triangle"></i> Critical (23)
+                        </button>
+                        <button class="filter-btn-gov warning" data-filter="warning">
+                            <i class="fas fa-exclamation-circle"></i> Warning (34)
+                        </button>
+                        <button class="filter-btn-gov normal" data-filter="normal">
+                            <i class="fas fa-check-circle"></i> Normal (99)
+                        </button>
+                    </div>
+                    <div class="search-group-gov">
+                        <label>Search Location:</label>
+                        <div class="search-box-gov">
+                            <input type="text" id="searchLocation" placeholder="Enter district, city, or bin ID...">
+                            <button class="search-btn">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="map-container-gov">
+                    <div id="mainMap" class="main-map-gov"></div>
+                    
+                    <!-- Government Style Legend -->
+                    <div class="map-legend-gov">
+                        <h4><i class="fas fa-info-circle"></i> Legend</h4>
+                        <div class="legend-items">
+                            <div class="legend-item">
+                                <span class="legend-marker critical"><i class="fas fa-trash"></i></span>
+                                <span>Critical (>80%)</span>
+                                <span class="count">23</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-marker warning"><i class="fas fa-trash"></i></span>
+                                <span>Warning (60-80%)</span>
+                                <span class="count">34</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-marker normal"><i class="fas fa-trash"></i></span>
+                                <span>Normal (<60%)</span>
+                                <span class="count">99</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-marker truck"><i class="fas fa-truck"></i></span>
+                                <span>Collection Vehicle</span>
+                                <span class="count">8</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Analytics Section -->
+            <section id="analytics" class="section">
+                <div class="page-header">
+                    <h1>Analytics & Performance Reports</h1>
+                    <p class="page-subtitle">Data-driven insights for optimizing waste management operations</p>
+                </div>
+
+                <div class="analytics-grid-gov">
+                    <div class="chart-container-gov">
+                        <div class="chart-header">
+                            <h3>Weekly Fill Level Trends</h3>
+                            <div class="chart-actions">
+                                <select class="period-selector">
+                                    <option>Last 7 Days</option>
+                                    <option>Last 30 Days</option>
+                                    <option>Last 3 Months</option>
+                                </select>
+                            </div>
+                        </div>
+                        <canvas id="fillTrendChart"></canvas>
+                    </div>
+                    
+                    <div class="chart-container-gov">
+                        <div class="chart-header">
+                            <h3>Bin Status Distribution</h3>
+                            <span class="chart-subtitle">Current state overview</span>
+                        </div>
+                        <canvas id="statusPieChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="analytics-grid-gov">
+                    <div class="chart-container-gov full-width">
+                        <div class="chart-header">
+                            <h3>Collection Efficiency & Cost Savings</h3>
+                            <span class="chart-subtitle">Monthly performance comparison</span>
+                        </div>
+                        <canvas id="efficiencyChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="analytics-grid-gov">
+                    <div class="chart-container-gov">
+                        <div class="chart-header">
+                            <h3>District-wise Waste Generation</h3>
+                            <span class="chart-subtitle">Tonnes per day</span>
+                        </div>
+                        <canvas id="areaChart"></canvas>
+                    </div>
+                    
+                    <div class="impact-cards-gov">
+                        <div class="impact-card-gov environmental">
+                            <div class="impact-icon">
+                                <i class="fas fa-leaf"></i>
+                            </div>
+                            <div class="impact-content">
+                                <h4>Environmental Impact</h4>
+                                <p class="impact-value">420 tonnes</p>
+                                <span class="impact-label">CO₂ Emission Reduced</span>
+                                <span class="impact-change positive">↑ 15% from last month</span>
+                            </div>
+                        </div>
+                        
+                        <div class="impact-card-gov financial">
+                            <div class="impact-icon">
+                                <i class="fas fa-rupee-sign"></i>
+                            </div>
+                            <div class="impact-content">
+                                <h4>Cost Optimization</h4>
+                                <p class="impact-value">₹12.4 Lakh</p>
+                                <span class="impact-label">Monthly Savings</span>
+                                <span class="impact-change positive">↑ 28% efficiency gain</span>
+                            </div>
+                        </div>
+                        
+                        <div class="impact-card-gov operational">
+                            <div class="impact-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="impact-content">
+                                <h4>Operational Efficiency</h4>
+                                <p class="impact-value">2.8 hours</p>
+                                <span class="impact-label">Avg. Collection Time</span>
+                                <span class="impact-change positive">↓ 38% time reduction</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Routes Section -->
+            <section id="routes" class="section">
+                <div class="page-header">
+                    <h1>Smart Route Management</h1>
+                    <p class="page-subtitle">AI-powered optimization for efficient waste collection routes</p>
+                </div>
+
+                <div class="route-controls-gov">
+                    <div class="route-actions">
+                        <button class="btn-gov btn-primary" id="generateRoute">
+                            <i class="fas fa-route"></i> Generate Optimal Route
+                        </button>
+                        <button class="btn-gov btn-secondary" id="exportRoute">
+                            <i class="fas fa-download"></i> Export Route Plan
+                        </button>
+                        <button class="btn-gov btn-secondary" id="scheduleRoute">
+                            <i class="fas fa-calendar"></i> Schedule Collection
+                        </button>
+                    </div>
+                    <div class="route-filters">
+                        <select id="truckSelect" class="select-gov">
+                            <option value="all">All Vehicles</option>
+                            <option value="truck1">GJ-01-AB-1234 (Ahmedabad East)</option>
+                            <option value="truck2">GJ-01-CD-5678 (Ahmedabad West)</option>
+                            <option value="truck3">GJ-02-EF-9012 (Surat Central)</option>
+                        </select>
+                        <select id="prioritySelect" class="select-gov">
+                            <option value="critical">Critical Bins Only</option>
+                            <option value="warning">Warning + Critical</option>
+                            <option value="all">All Bins</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="route-info-grid-gov">
+                    <div class="route-info-card-gov">
+                        <div class="info-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Bins to Collect</h4>
+                            <p id="routeBins">15</p>
+                            <small>High priority bins</small>
+                        </div>
+                    </div>
+                    <div class="route-info-card-gov">
+                        <div class="info-icon">
+                            <i class="fas fa-road"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Total Distance</h4>
+                            <p id="routeDistance">34.5 km</p>
+                            <small>Optimized path</small>
+                        </div>
+                    </div>
+                    <div class="route-info-card-gov">
+                        <div class="info-icon">
+                            <i class="fas fa-hourglass-half"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Estimated Duration</h4>
+                            <p id="routeDuration">2h 15m</p>
+                            <small>Including collection time</small>
+                        </div>
+                    </div>
+                    <div class="route-info-card-gov">
+                        <div class="info-icon">
+                            <i class="fas fa-tint"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Fuel Estimate</h4>
+                            <p id="routeFuel">8.2 L</p>
+                            <small>Cost: ₹738</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="route-display-gov">
+                    <div id="routeMap" class="route-map-gov"></div>
+                    
+                    <div class="route-sequence-gov">
+                        <h3><i class="fas fa-list-ol"></i> Collection Sequence</h3>
+                        <div class="sequence-container">
+                            <ol id="routeSequence" class="sequence-list">
+                                <!-- Dynamic route sequence -->
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Citizen Portal Section -->
+            <section id="public" class="section">
+                <div class="page-header">
+                    <h1>Citizen Service Portal</h1>
+                    <p class="page-subtitle">Report issues and track waste collection schedules in your area</p>
+                </div>
+
+                <div class="public-grid-gov">
+                    <div class="service-section">
+                        <div class="service-card-gov">
+                            <div class="service-header">
+                                <h2><i class="fas fa-flag"></i> Report Waste Issue</h2>
+                                <span class="service-subtitle">Help us keep Gujarat clean</span>
+                            </div>
+                            <form id="reportForm" class="report-form-gov">
+                                <div class="form-row">
+                                    <div class="form-group-gov">
+                                        <label>Full Name *</label>
+                                        <input type="text" id="reporterName" required placeholder="Enter your full name">
+                                    </div>
+                                    <div class="form-group-gov">
+                                        <label>Contact Number *</label>
+                                        <input type="tel" id="reporterPhone" required placeholder="10-digit mobile number">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group-gov">
+                                        <label>District *</label>
+                                        <select id="district" required>
+                                            <option value="">Select District</option>
+                                            <option value="ahmedabad">Ahmedabad</option>
+                                            <option value="surat">Surat</option>
+                                            <option value="vadodara">Vadodara</option>
+                                            <option value="rajkot">Rajkot</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group-gov">
+                                        <label>Area/Locality *</label>
+                                        <input type="text" id="reportLocation" required placeholder="Specific area or landmark">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group-gov">
+                                    <label>Issue Type *</label>
+                                    <select id="issueType" required>
+                                        <option value="">Select Issue Type</option>
+                                        <option value="overflow">Bin Overflowing</option>
+                                        <option value="damaged">Bin Damaged/Broken</option>
+                                        <option value="missing">Bin Missing/Removed</option>
+                                        <option value="smell">Foul Odor/Unhygienic</option>
+                                        <option value="irregular">Irregular Collection</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group-gov">
+                                    <label>Description</label>
+                                    <textarea id="issueDescription" rows="4" placeholder="Provide detailed description of the issue..."></textarea>
+                                </div>
+                                
+                                <div class="form-group-gov">
+                                    <label>Upload Photo (Optional)</label>
+                                    <input type="file" id="issuePhoto" accept="image/*" class="file-input-gov">
+                                    <small>Maximum size: 5MB (JPG, PNG)</small>
+                                </div>
+                                
+                                <button type="submit" class="btn-gov btn-primary btn-full">
+                                    <i class="fas fa-paper-plane"></i> Submit Complaint
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="info-section">
+                        <div class="info-card-gov">
+                            <div class="info-header">
+                                <h3><i class="fas fa-calendar-check"></i> Collection Schedule</h3>
+                                <span class="info-subtitle">Check your area's collection timings</span>
+                            </div>
+                            <div class="schedule-search">
+                                <input type="text" id="scheduleSearch" placeholder="Enter your area name..." class="input-gov">
+                                <button class="btn-gov btn-secondary" id="checkSchedule">
+                                    <i class="fas fa-search"></i> Check Schedule
+                                </button>
+                            </div>
+                            <div id="scheduleResult" class="schedule-result-gov"></div>
+                        </div>
+
+                        <div class="info-card-gov">
+                            <div class="info-header">
+                                <h3><i class="fas fa-chart-line"></i> Community Impact</h3>
+                                <span class="info-subtitle">Your contribution to Clean Gujarat</span>
+                            </div>
+                            <div class="impact-stats-gov">
+                                <div class="impact-stat">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <h4>587</h4>
+                                        <p>Citizen Reports This Month</p>
+                                        <span class="trend positive">+12% from last month</span>
+                                    </div>
+                                </div>
+                                <div class="impact-stat">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <h4>98.5%</h4>
+                                        <p>Issues Resolved</p>
+                                        <span class="trend positive">Within 24 hours</span>
+                                    </div>
+                                </div>
+                                <div class="impact-stat">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <h4>2.3 hrs</h4>
+                                        <p>Average Response Time</p>
+                                        <span class="trend positive">-45% improvement</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-card-gov">
+                            <div class="info-header">
+                                <h3><i class="fas fa-trophy"></i> Cleanest Areas Ranking</h3>
+                                <span class="info-subtitle">Districts leading in cleanliness</span>
+                            </div>
+                            <div class="leaderboard-gov">
+                                <div class="leaderboard-item rank-1">
+                                    <span class="rank">🥇</span>
+                                    <div class="area-info">
+                                        <span class="area-name">Satellite, Ahmedabad</span>
+                                        <span class="area-score">95/100</span>
+                                    </div>
+                                    <span class="improvement">+2</span>
+                                </div>
+                                <div class="leaderboard-item rank-2">
+                                    <span class="rank">🥈</span>
+                                    <div class="area-info">
+                                        <span class="area-name">Adajan, Surat</span>
+                                        <span class="area-score">92/100</span>
+                                    </div>
+                                    <span class="improvement">+1</span>
+                                </div>
+                                <div class="leaderboard-item rank-3">
+                                    <span class="rank">🥉</span>
+                                    <div class="area-info">
+                                        <span class="area-name">Alkapuri, Vadodara</span>
+                                        <span class="area-score">89/100</span>
+                                    </div>
+                                    <span class="improvement">-1</span>
+                                </div>
+                                <div class="leaderboard-item">
+                                    <span class="rank">4</span>
+                                    <div class="area-info">
+                                        <span class="area-name">University Road, Rajkot</span>
+                                        <span class="area-score">85/100</span>
+                                    </div>
+                                    <span class="improvement">+3</span>
+                                </div>
+                                <div class="leaderboard-item">
+                                    <span class="rank">5</span>
+                                    <div class="area-info">
+                                        <span class="area-name">CG Road, Ahmedabad</span>
+                                        <span class="area-score">83/100</span>
+                                    </div>
+                                    <span class="improvement">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Government Footer -->
+    <footer class="gov-footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#">Gujarat Government Portal</a></li>
+                    <li><a href="#">Urban Development Department</a></li>
+                    <li><a href="#">Swachh Bharat Mission</a></li>
+                    <li><a href="#">Smart Cities Mission</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Help & Documentation</a></li>
+                    <li><a href="#">Contact Municipal Corporation</a></li>
+                    <li><a href="#">Report Technical Issues</a></li>
+                    <li><a href="#">Feedback & Suggestions</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Information</h4>
+                <div class="contact-info">
+                    <p><i class="fas fa-phone"></i> Helpline: 1800-123-4567</p>
+                    <p><i class="fas fa-envelope"></i> Email: waste@gujarat.gov.in</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Gandhinagar, Gujarat 382010</p>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Government of Gujarat. All rights reserved. | Developed for Gujarat Hackathon</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a> |
+                <a href="#">Terms of Service</a> |
+                <a href="#">Accessibility</a> |
+                <a href="#">RTI</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+</body>
+</html>
